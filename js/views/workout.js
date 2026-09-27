@@ -5,6 +5,7 @@ import { computeGame } from '../game.js';
 import { icon } from '../icons.js';
 
 const RPE = [6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10];
+const REST_CHOICES = [[90, '1:30'], [120, '2 min'], [180, '3 min']];
 let timerHandle;
 
 export function suggestType(state) {
@@ -122,10 +123,14 @@ export function render(app) {
       <span class="goal">${doneEx}/${draft.exercises.length}</span>
     </header>
     <div id="rest" class="rest ${draft.restEnd ? '' : 'hidden'}" role="timer" aria-live="off">
-      ${icon.timer}<b id="rest-left">0:00</b>
-      <button class="link-btn" data-act="rest-minus">−15 s</button>
-      <button class="link-btn" data-act="rest-plus">+30 s</button>
-      <button class="link-btn" data-act="rest-stop">Stop</button>
+      <div class="rest-top">
+        ${icon.timer}<b id="rest-left">0:00</b>
+        <button class="link-btn" data-act="rest-plus">+30 s</button>
+        <button class="link-btn" data-act="rest-stop">Stop</button>
+      </div>
+      <div class="rest-pick" role="group" aria-label="Długość przerwy">
+        ${REST_CHOICES.map(([sec, label]) => `<button data-act="rest-set" data-sec="${sec}" class="${draft.restLen === sec ? 'on' : ''}" aria-pressed="${draft.restLen === sec}">${label}</button>`).join('')}
+      </div>
     </div>
     ${draft.exercises.map((ex, i) => exerciseCard(state, ex, i, best)).join('')}
     <button class="btn wide" data-act="add-ex">${icon.plus} Dodaj ćwiczenie</button>
@@ -144,7 +149,7 @@ function tickRest(app) {
   if (left <= 0) {
     el.textContent = 'Czas na serię';
     box.classList.add('over');
-    if (!box.dataset.buzzed) { navigator.vibrate?.([250, 120, 250]); box.dataset.buzzed = '1'; }
+    if (!draft.restBuzzed) { navigator.vibrate?.([300, 150, 300, 150, 300]); draft.restBuzzed = true; }
     return;
   }
   box.classList.remove('over');
@@ -178,7 +183,9 @@ export function mount(root, app) {
       set.done = !set.done;
       if (set.done) {
         if (set.reps == null) set.reps = set.target;
-        draft.restEnd = Date.now() + restSeconds(ex.rest) * 1000;
+        // Ostatnio wybrana przerwa dla tego ćwiczenia, a jeśli brak — pierwsza liczba z planu („2-3 min” → 2 min).
+        const len = state.settings.restByEx?.[ex.exId] ?? restSeconds(ex.rest);
+        Object.assign(draft, { restStart: Date.now(), restLen: len, restEnd: Date.now() + len * 1000, restEx: ex.exId, restBuzzed: false });
       }
     } else if (act === 'add-set') {
       const prev = ex.sets.at(-1);
@@ -190,10 +197,14 @@ export function mount(root, app) {
     } else if (act === 'remove-ex') {
       if (ex.sets.some(s => s.done) && !confirm('Usunąć ćwiczenie razem z odhaczonymi seriami?')) return;
       draft.exercises.splice(Number(exEl.dataset.ex), 1);
+    } else if (act === 'rest-set') {
+      // Przerwa liczona od odhaczenia serii; wybór zapamiętujemy dla ćwiczenia.
+      const sec = Number(btn.dataset.sec);
+      Object.assign(draft, { restLen: sec, restEnd: (draft.restStart ?? Date.now()) + sec * 1000, restBuzzed: false });
+      if (draft.restEx) (state.settings.restByEx ??= {})[draft.restEx] = sec;
     } else if (act === 'rest-plus') {
       draft.restEnd = Math.max(draft.restEnd, Date.now()) + 30000;
-    } else if (act === 'rest-minus') {
-      draft.restEnd -= 15000;
+      draft.restBuzzed = false;
     } else if (act === 'rest-stop') {
       draft.restEnd = null;
     } else if (act === 'add-ex') {

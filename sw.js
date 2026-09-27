@@ -1,5 +1,5 @@
 // Offline: najpierw sieć (zawsze świeża wersja), bez zasięgu na siłowni — pamięć podręczna.
-const CACHE = 'silownia-v2';
+const CACHE = 'silownia-v3';
 const FILES = [
   './', 'index.html', 'manifest.webmanifest', 'css/app.css',
   'js/app.js', 'js/util.js', 'js/db.js', 'js/state.js', 'js/xlsx.js', 'js/importer.js', 'js/stats.js',

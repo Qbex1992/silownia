@@ -182,7 +182,7 @@ textarea { resize: vertical; margin-top: 8px; }
 .date-edit { display: flex; align-items: center; gap: 6px; }
 .date-edit input { min-height: 30px !important; padding: 2px 6px !important; width: auto !important; font-size: 13px; }
 .rest {
-  position: sticky; top: 8px; z-index: 5; display: flex; align-items: center; gap: 10px;
+  position: sticky; top: 8px; z-index: 5; display: flex; flex-direction: column; gap: 8px;
   background: var(--surface-2); border: 1px solid var(--accent); border-radius: 12px; padding: 8px 12px; margin-bottom: 12px;
 }
 .rest b { font-size: 22px; flex: 1; }
@@ -371,3 +371,13 @@ dialog.sheet::backdrop { background: rgba(0,0,0,.6); }
 .done-today { display: flex; gap: 12px; align-items: flex-start; border-color: color-mix(in srgb, var(--good) 45%, var(--line)); }
 .done-today > svg { color: var(--good); width: 26px; height: 26px; }
 .done-today p { margin: 2px 0 0; }
+.rest-top { display: flex; align-items: center; gap: 10px; }
+.rest-top b { font-size: 26px; flex: 1; }
+.rest-pick { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.rest-pick button {
+  min-height: 44px; border-radius: 10px; border: 1px solid var(--line); background: var(--surface);
+  font-weight: 700; font-size: 15px;
+}
+.rest-pick button.on { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.rest.over .rest-pick button { background: transparent; border-color: var(--on-accent); color: var(--on-accent); }
+.rest.over .rest-pick button.on { background: var(--on-accent); color: var(--accent); }
