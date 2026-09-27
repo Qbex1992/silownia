@@ -1,0 +1,27 @@
+const svg = (d, extra = '') => `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ${extra}>${d}</svg>`;
+
+export const icon = {
+  home: svg('<path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/>'),
+  dumbbell: svg('<path d="M3 10v4M6 7v10M18 7v10M21 10v4M6 12h12"/>'),
+  calendar: svg('<rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>'),
+  chart: svg('<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>'),
+  body: svg('<circle cx="12" cy="5" r="2.5"/><path d="M6 9h12M12 9v5M9 22l3-8 3 8"/>'),
+  chevronL: svg('<path d="M15 6l-6 6 6 6"/>'),
+  chevronR: svg('<path d="M9 6l6 6-6 6"/>'),
+  plus: svg('<path d="M12 5v14M5 12h14"/>'),
+  check: svg('<path d="M5 12l5 5 9-10"/>'),
+  x: svg('<path d="M6 6l12 12M18 6L6 18"/>'),
+  trash: svg('<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>'),
+  trophy: svg('<path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8 21h8M9 17h6"/>'),
+  flame: svg('<path d="M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-3 2-4 2-7 2 1 3 3 3 5"/>'),
+  camera: svg('<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>'),
+  timer: svg('<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M10 2h4"/>'),
+  user: svg('<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>'),
+  gift: svg('<rect x="3" y="8" width="18" height="5" rx="1"/><path d="M5 13v8h14v-8M12 8v13M12 8S10 3 7.5 4.5 9 8 12 8zM12 8s2-5 4.5-3.5S15 8 12 8z"/>'),
+  download: svg('<path d="M12 4v11M7 10l5 5 5-5M5 20h14"/>'),
+  upload: svg('<path d="M12 20V9M7 14l5-5 5 5M5 4h14"/>'),
+  quote: svg('<path d="M9 7H5v6h4v4H6M19 7h-4v6h4v4h-3"/>'),
+  edit: svg('<path d="M4 20h4L19 9l-4-4L4 16zM13 7l4 4"/>'),
+  lock: svg('<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>'),
+  note: svg('<path d="M5 4h14v16H5zM9 9h6M9 13h6M9 17h3"/>'),
+};

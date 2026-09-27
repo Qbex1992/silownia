@@ -1,0 +1,4 @@
+# Prywatne dane treningowe — nie publikujemy
+dev/
+*.xlsx
+*.csv
